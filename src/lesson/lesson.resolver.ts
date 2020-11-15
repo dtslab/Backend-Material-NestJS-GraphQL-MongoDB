@@ -16,10 +16,11 @@ export class LessonResolver {
     return this.lessonService.getLesson(id);    
   }
 
-  @Query(returns => [LessonType])
-  lessons() {
-    return this.lessonService.getLessons();
-  }
+  //# conflict: pending code //
+  // @Query(returns => [LessonType])
+  // lessons() {
+  //   return this.lessonService.getLessons();
+  // }
 
   @Mutation(returns => LessonType)
   createLesson(
