@@ -15,20 +15,27 @@ export class LessonService {
     return this.lessonRepository.findOne({ id });
   }
 
-  //# conflict: pending code //
-  // async getLessons(id: string): Promise<Lesson[]> {
-  //   return this.lessonRepository.find();
-  // }
+   async getLessons(): Promise<Lesson[]> {
+    return this.lessonRepository.find();
+  }
 
   async createLesson(createLessonInput: CreateLessonInput): Promise<Lesson> {
-    const { name, startDate, endDate } = createLessonInput;
+    const { name, startDate, endDate, students } = createLessonInput;
     const Lesson = this.lessonRepository.create({
       id: uuid(),
       name,
       startDate,
       endDate,
+      students
     });
 
     return this.lessonRepository.save(Lesson);
+  }
+
+  async assignStudentsToLesson(lessonId: string, studentIds: string[]): Promise <Lesson> {
+    const lesson = await this.lessonRepository.findOne({ id: lessonId });
+    lesson.students = [...lesson.students, ...studentIds];
+    return this.lessonRepository.save(lesson); 
+
   }
 }
